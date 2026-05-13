@@ -51,3 +51,9 @@ release:
   name_template: '{{ .Version }}'
   draft: false
   prerelease: false
+brews:
+  - name: gen
+    tap:
+      owner: aminshahid573
+      name: homebrew-gen
+      directory: Formula
