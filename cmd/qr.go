@@ -8,6 +8,7 @@ import (
 
 	"github.com/mdp/qrterminal/v3"
 	"github.com/spf13/cobra"
+	"rsc.io/qr"
 )
 
 var qrCmd = &cobra.Command{
@@ -27,9 +28,9 @@ Examples:
   gen qr --input "mailto:aminShahid5515@gmail.com"`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		input, _     := cmd.Flags().GetString("input")
-		level, _     := cmd.Flags().GetString("level")
-		noHalf, _    := cmd.Flags().GetBool("no-half-blocks")
+		input, _ := cmd.Flags().GetString("input")
+		level, _ := cmd.Flags().GetString("level")
+		noHalf, _ := cmd.Flags().GetBool("no-half-blocks")
 		quietZone, _ := cmd.Flags().GetInt("quiet-zone")
 
 		if len(args) > 0 {
@@ -60,16 +61,16 @@ Examples:
 }
 
 // resolveQRLevel returns qrterminal.Level — NOT rsc.io/qr.Level
-func resolveQRLevel(level string) qrterminal.Level {
+func resolveQRLevel(level string) qr.Level {
 	switch strings.ToUpper(level) {
 	case "M":
-		return qrterminal.M
+		return qr.M
 	case "Q":
-		return qrterminal.Q
+		return qr.Q
 	case "H":
-		return qrterminal.H
+		return qr.H
 	default:
-		return qrterminal.L
+		return qr.L
 	}
 }
 
