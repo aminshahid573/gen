@@ -1,3 +1,4 @@
+// Copyright © 2026 Shahid Amin aminShahid5515@gmail.com
 package cmd
 
 import (
@@ -35,15 +36,16 @@ Examples:
   gen id --version 3 --namespace dns --name example.com
   gen id --version 4 --format base58
   gen id --version 7 --format urn
+  gen id --format random --count 5
   gen id --decode 019681a2-f3c8-7000-a7e1-5b9f4c3d2e1a`,
 
 	Run: func(cmd *cobra.Command, args []string) {
 		version, _ := cmd.Flags().GetInt("version")
-		name, _ := cmd.Flags().GetString("name")
-		ns, _ := cmd.Flags().GetString("namespace")
-		format, _ := cmd.Flags().GetString("format")
-		raw, _ := cmd.Flags().GetString("decode")
-		count, _ := cmd.Flags().GetInt("count")
+		name, _    := cmd.Flags().GetString("name")
+		ns, _      := cmd.Flags().GetString("namespace")
+		format, _  := cmd.Flags().GetString("format")
+		raw, _     := cmd.Flags().GetString("decode")
+		count, _   := cmd.Flags().GetInt("count")
 
 		// decode mode — skip generation
 		if raw != "" {
@@ -67,14 +69,18 @@ Examples:
 				os.Exit(1)
 			}
 
-			out, err := formatUUID(id, format)
+			// resolve "random" to an actual format name before formatting
+			actualFormat := resolveFormat(format)
+
+			out, err := formatUUID(id, actualFormat)
 			if err != nil {
 				fmt.Fprintln(os.Stderr, err.Error())
 				os.Exit(1)
 			}
 
-			rows = append(rows, []string{fmt.Sprintf("v%d", version), format, out})
+			rows = append(rows, []string{fmt.Sprintf("v%d", version), actualFormat, out})
 		}
+
 		fmt.Println(ui.RenderTable([]string{"Version", "Format", "UUID"}, rows))
 	},
 }
@@ -105,6 +111,16 @@ func generateUUID(version int, name, ns string) (uuid.UUID, error) {
 	}
 }
 
+// resolveFormat maps "random" to a concrete format name.
+// All other values pass through unchanged.
+func resolveFormat(format string) string {
+	if strings.ToLower(format) != "random" {
+		return format
+	}
+	formats := []string{"standard", "compact", "upper", "urn", "base58"}
+	return formats[rand.Intn(len(formats))]
+}
+
 // formatUUID returns the UUID string in the requested format.
 func formatUUID(id uuid.UUID, format string) (string, error) {
 	switch strings.ToLower(format) {
@@ -118,18 +134,8 @@ func formatUUID(id uuid.UUID, format string) (string, error) {
 		return id.URN(), nil
 	case "base58":
 		return base58.Encode(id[:]), nil
-	case "random":
-		formats := []string{
-			"standard",
-			"compact",
-			"upper",
-			"urn",
-			"base58",
-		}
-		randomFormat := formats[rand.Intn(len(formats))]
-		return formatUUID(id, randomFormat)
 	default:
-		return "", fmt.Errorf("invalid format %q (choose: standard, compact, upper, urn, base58)", format)
+		return "", fmt.Errorf("invalid format %q (choose: standard, compact, upper, urn, base58, random)", format)
 	}
 }
 
@@ -141,11 +147,11 @@ func decodeUUID(raw string) {
 	}
 
 	rows := [][]string{
-		{"String", id.String()},
-		{"Compact", strings.ReplaceAll(id.String(), "-", "")},
-		{"URN", id.URN()},
-		{"Version", strconv.Itoa(int(id.Version()))},
-		{"Variant", id.Variant().String()},
+		{"String",    id.String()},
+		{"Compact",   strings.ReplaceAll(id.String(), "-", "")},
+		{"URN",       id.URN()},
+		{"Version",   strconv.Itoa(int(id.Version()))},
+		{"Variant",   id.Variant().String()},
 		{"Timestamp", extractTimestamp(id)},
 	}
 
@@ -200,7 +206,7 @@ func init() {
 	idCmd.Flags().IntP("version", "v", 4, "UUID version to generate (1,3,4,5,6,7)")
 	idCmd.Flags().StringP("name", "n", "", "Name string for v3/v5 hashed UUIDs")
 	idCmd.Flags().StringP("namespace", "s", "dns", "Namespace for v3/v5 (dns, url, oid, x500, or a UUID)")
-	idCmd.Flags().StringP("format", "f", "standard", "Output format: standard, compact, upper, urn, base58")
+	idCmd.Flags().StringP("format", "f", "standard", "Output format: standard, compact, upper, urn, base58, random")
 	idCmd.Flags().StringP("decode", "d", "", "Decode and inspect an existing UUID")
 	idCmd.Flags().IntP("count", "c", 1, "Number of UUIDs to generate")
 }
