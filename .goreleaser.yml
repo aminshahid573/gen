@@ -57,3 +57,10 @@ brews:
       owner: aminshahid573
       name: homebrew-gen
       directory: Formula
+scoop:
+  bucket:
+    owner: aminshahid573
+    name: scoop-gen
+aur:
+  - pkgname: gen
+    repo: gen
