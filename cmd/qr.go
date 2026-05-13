@@ -60,7 +60,7 @@ Examples:
 	},
 }
 
-// resolveQRLevel returns qrterminal.Level — NOT rsc.io/qr.Level
+// resolveQRLevel returns qr.Level (rsc.io/qr.Level)
 func resolveQRLevel(level string) qr.Level {
 	switch strings.ToUpper(level) {
 	case "M":
