@@ -1,53 +1,82 @@
-/*
-Copyright © 2026 Shahid Amin aminShahid5515@gmail.com
-*/
+// Copyright © 2026 Shahid Amin aminShahid5515@gmail.com
 package cmd
 
 import (
+	"fmt"
 	"os"
+	"strings"
 
 	"github.com/mdp/qrterminal/v3"
 	"github.com/spf13/cobra"
 )
 
-// qrCmd represents the qr command
 var qrCmd = &cobra.Command{
-	Use:   "qr",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use:   "qr [input]",
+	Short: "Render a QR code in the terminal",
+	Long: `Render a QR code directly in the terminal using Unicode block characters.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Input can be passed as a positional argument or via --input.
+Error correction levels: L (7%), M (15%), Q (25%), H (30%).
+Higher levels produce larger QR codes but tolerate more damage.
+
+Examples:
+  gen qr "https://example.com"
+  gen qr --input "https://example.com"
+  gen qr --input "Hello, World!" --level H
+  gen qr --input "otpauth://totp/Example?secret=JBSWY3DP" --level M
+  gen qr --input "mailto:aminShahid5515@gmail.com"`,
+
 	Run: func(cmd *cobra.Command, args []string) {
-		textData, _ := cmd.Flags().GetString("text")
-		if textData != "" {
-			generateQR(textData)
+		input, _     := cmd.Flags().GetString("input")
+		level, _     := cmd.Flags().GetString("level")
+		noHalf, _    := cmd.Flags().GetBool("no-half-blocks")
+		quietZone, _ := cmd.Flags().GetInt("quiet-zone")
+
+		if len(args) > 0 {
+			input = strings.Join(args, " ")
 		}
+
+		if input == "" {
+			fatalf("input is required — pass as argument or --input")
+		}
+
+		cfg := qrterminal.Config{
+			Level:          resolveQRLevel(level), // now correctly qrterminal.Level
+			Writer:         os.Stdout,
+			BlackChar:      qrterminal.BLACK,
+			WhiteChar:      qrterminal.WHITE,
+			BlackWhiteChar: qrterminal.BLACK_WHITE,
+			WhiteBlackChar: qrterminal.WHITE_BLACK,
+			QuietZone:      quietZone,
+			HalfBlocks:     !noHalf,
+		}
+
+		fmt.Println()
+		qrterminal.GenerateWithConfig(input, cfg)
+		fmt.Println()
+		fmt.Printf("  Input : %s\n", input)
+		fmt.Printf("  Level : %s\n", strings.ToUpper(level))
 	},
+}
+
+// resolveQRLevel returns qrterminal.Level — NOT rsc.io/qr.Level
+func resolveQRLevel(level string) qrterminal.Level {
+	switch strings.ToUpper(level) {
+	case "M":
+		return qrterminal.M
+	case "Q":
+		return qrterminal.Q
+	case "H":
+		return qrterminal.H
+	default:
+		return qrterminal.L
+	}
 }
 
 func init() {
 	rootCmd.AddCommand(qrCmd)
-	qrCmd.Flags().StringP("text", "t", "", "Text to genrate QR Code")
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// qrCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// qrCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-}
-
-func generateQR(rawData string) {
-	config := qrterminal.Config{
-		HalfBlocks: true,
-		Level:      qrterminal.M,
-		Writer:     os.Stdout,
-	}
-	qrterminal.GenerateWithConfig(rawData, config)
+	qrCmd.Flags().StringP("input", "i", "", "String to encode into the QR code")
+	qrCmd.Flags().StringP("level", "l", "L", "Error correction level: L, M, Q, H")
+	qrCmd.Flags().Bool("no-half-blocks", false, "Use full blocks instead of half-block Unicode characters")
+	qrCmd.Flags().Int("quiet-zone", 2, "Quiet zone size (blank border around QR code)")
 }
