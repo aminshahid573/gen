@@ -1,66 +1,40 @@
 # .goreleaser.yml
+version: 2
 project_name: gen
 before:
   hooks:
     - go mod tidy
 builds:
-  - id: gen
-    binary: gen
+  - binary: gen
     env:
       - CGO_ENABLED=0
     goos:
+      - darwin
       - linux
       - windows
-      - darwin
     goarch:
+      - 386
       - amd64
+      - arm
       - arm64
-    ldflags:
-      - -s -w
-      - -X main.version={{.Version}}
+    goarm:
+      - 6
+      - 7
+
 archives:
-  - id: gen
-    builds:
-      - gen
-    format: tar.gz
-    format_overrides:
+  - format_overrides:
       - goos: windows
-        format: zip
-    name_template: >-
-      {{ .ProjectName }}_
-      {{- .Version }}_
-      {{- if not (eq .Os "") }}{{ .Os | title }}_
-      {{- end }}{{ if not (eq .Arch "") }}{{ .Arch }}{{ end }}
-    files:
-      - LICENSE
-      - README.md
-checksum:
-  name_template: 'checksums.txt'
-snapshot:
-  name_template: "{{ incpatch .Version }}-next"
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - '^docs:'
-      - '^test:'
+        formats: ['zip']
+
 release:
-  github:
-    owner: aminshahid573
-    name: gen
-  name_template: '{{ .Version }}'
-  draft: false
-  prerelease: false
+  name_template: "{{.ProjectName}}-v{{.Version}}"
+
 brews:
-  - name: gen
-    tap:
+  - repository:
       owner: aminshahid573
       name: homebrew-gen
-      directory: Formula
-scoop:
-  bucket:
-    owner: aminshahid573
-    name: scoop-gen
-aur:
-  - pkgname: gen
-    repo: gen
+    commit_author:
+      name: Shahid Amin
+      email: createa557733@gmail.com
+    homepage: https://github.com/aminshahid573/gen
+    description: A Swiss Army knife CLI tool for developers, packed with useful utilities for daily tasks.

@@ -2,8 +2,6 @@
 
 A Swiss Army knife CLI tool for developers, packed with useful utilities for daily tasks.
 
-**Author:** Shahid Amin
-
 ## What it does
 
 gen is a collection of command-line tools that make common development tasks quicker and less painful. Instead of remembering obscure commands or visiting websites for simple utilities, you've got them right in your terminal.
