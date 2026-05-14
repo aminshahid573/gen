@@ -1,9 +1,11 @@
 # .goreleaser.yml
 version: 2
 project_name: gen
+
 before:
   hooks:
     - go mod tidy
+
 builds:
   - binary: gen
     env:
@@ -12,6 +14,7 @@ builds:
       - darwin
       - linux
       - windows
+      - freebsd
     goarch:
       - 386
       - amd64
@@ -22,19 +25,54 @@ builds:
       - 7
 
 archives:
-  - format_overrides:
+  - id: default
+    formats: ['tar.gz']
+    format_overrides:
       - goos: windows
         formats: ['zip']
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
 
-release:
-  name_template: "{{.ProjectName}}-v{{.Version}}"
+checksum:
+  name_template: "checksums.txt"
 
 brews:
   - repository:
       owner: aminshahid573
-      name: homebrew-gen
+      name: homebrew-tap
     commit_author:
       name: Shahid Amin
       email: createa557733@gmail.com
     homepage: https://github.com/aminshahid573/gen
     description: A Swiss Army knife CLI tool for developers, packed with useful utilities for daily tasks.
+    license: MIT
+    test: |
+      system "#{bin}/gen --version"
+    install: |
+      bin.install "gen"
+
+scoops:
+  - repository:
+      owner: aminshahid573
+      name: scoop-bucket
+    commit_author:
+      name: Shahid Amin
+      email: createa557733@gmail.com
+    homepage: https://github.com/aminshahid573/gen
+    description: A Swiss Army knife CLI tool for developers, packed with useful utilities for daily tasks.
+    license: MIT
+
+nfpms:
+  - id: gen-packages
+    package_name: gen
+    homepage: https://github.com/aminshahid573/gen
+    maintainer: Shahid Amin <createa557733@gmail.com>
+    description: A Swiss Army knife CLI tool for developers, packed with useful utilities for daily tasks.
+    license: MIT
+    formats:
+      - deb
+      - rpm
+      - apk
+    bindir: /usr/bin
+
+release:
+  name_template: "{{ .ProjectName }}-v{{ .Version }}"

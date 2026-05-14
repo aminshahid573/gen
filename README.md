@@ -19,7 +19,54 @@ gen is a collection of command-line tools that make common development tasks qui
 - **Password Generation** - Generate strong, memorable passwords
 - And more utilities being added regularly...
 
+#```markdown
 ## Installation
+
+**Homebrew** (macOS / Linux)
+```bash
+brew install aminshahid573/tap/gen
+```
+
+**Scoop** (Windows)
+```bash
+scoop bucket add aminshahid573 https://github.com/aminshahid573/scoop-bucket
+scoop install gen
+```
+
+**apt** (Debian / Ubuntu)
+```bash
+wget https://github.com/aminshahid573/gen/releases/latest/download/gen_linux_amd64.deb
+sudo dpkg -i gen_linux_amd64.deb
+```
+
+**rpm** (Fedora / RHEL)
+```bash
+sudo rpm -i https://github.com/aminshahid573/gen/releases/latest/download/gen_linux_amd64.rpm
+```
+
+**apk** (Alpine)
+```bash
+wget https://github.com/aminshahid573/gen/releases/latest/download/gen_linux_amd64.apk
+sudo apk add --allow-untrusted gen_linux_amd64.apk
+```
+
+**curl / wget** (any OS)
+```bash
+curl -fsSL https://raw.githubusercontent.com/aminshahid573/gen/main/install.sh | sh
+```
+
+**go install**
+```bash
+go install github.com/aminshahid573/gen@latest
+```
+
+**Build from source**
+```bash
+git clone https://github.com/aminshahid573/gen.git
+cd gen
+make build
+```
+```# Installation
 
 ```bash
 # Install via go install

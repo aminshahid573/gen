@@ -1,43 +1,58 @@
-#!/bin/bash
+#!/usr/bin/env sh
+# install.sh — install gen CLI
+# Usage:
+#   curl -fsSL https://raw.githubusercontent.com/aminshahid573/gen/main/install.sh | sh
+#   wget -qO- https://raw.githubusercontent.com/aminshahid573/gen/main/install.sh | sh
 
 set -e
 
 REPO="aminshahid573/gen"
-LATEST=$(curl -sL "https://api.github.com/repos/${REPO}/releases/latest" | grep -o '"tag_name": "v[^"]*"' | cut -d'"' -f4)
+BINARY="gen"
+INSTALL_DIR="${INSTALL_DIR:-/usr/local/bin}"
 
-if [ -z "$LATEST" ]; then
-    LATEST="v1.0.0"
-fi
-
-OS=$(uname -s | tr '[:upper:]' '[:lower:]')
-ARCH=$(uname -m)
-
-case "$ARCH" in
-    x86_64) ARCH="amd64" ;;
-    aarch64|arm64) ARCH="arm64" ;;
-esac
-
+# ── detect OS ────────────────────────────────────────────────────────────────
+OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
 case "$OS" in
-    mingw*|msys*|cygwin*) EXT=".exe" ;;
-    *) EXT="" ;;
+  linux)  OS="linux"   ;;
+  darwin) OS="darwin"  ;;
+  freebsd) OS="freebsd" ;;
+  *) echo "Unsupported OS: $OS" && exit 1 ;;
 esac
 
-URL="https://github.com/${REPO}/releases/download/${LATEST}/gen_${LATEST#v}_${OS}_${ARCH}.tar.gz"
+# ── detect arch ──────────────────────────────────────────────────────────────
+ARCH="$(uname -m)"
+case "$ARCH" in
+  x86_64 | amd64) ARCH="amd64" ;;
+  i386 | i686)    ARCH="386"   ;;
+  aarch64 | arm64) ARCH="arm64" ;;
+  armv7*)          ARCH="armv7" ;;
+  armv6*)          ARCH="armv6" ;;
+  *) echo "Unsupported arch: $ARCH" && exit 1 ;;
+esac
 
-echo "Downloading gen ${LATEST} for ${OS}/${ARCH}..."
+# ── fetch latest tag ─────────────────────────────────────────────────────────
+LATEST=$(curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest" \
+  | grep '"tag_name"' | sed -E 's/.*"tag_name": *"([^"]+)".*/\1/')
 
-mkdir -p gen_tmp
-cd gen_tmp
-curl -sL "$URL" | tar xz
+VERSION="${LATEST#v}"
+TARBALL="${BINARY}_${OS}_${ARCH}.tar.gz"
+URL="https://github.com/${REPO}/releases/download/${LATEST}/${TARBALL}"
 
-if [ -f "gen${EXT}" ]; then
-    chmod +x "gen${EXT}"
-    sudo mv "gen${EXT}" /usr/local/bin/gen
-    echo "gen installed successfully to /usr/local/bin/gen"
+echo "Installing ${BINARY} ${LATEST} (${OS}/${ARCH})..."
+
+TMP="$(mktemp -d)"
+trap 'rm -rf "$TMP"' EXIT
+
+curl -fsSL "$URL" -o "${TMP}/${TARBALL}"
+tar -xzf "${TMP}/${TARBALL}" -C "$TMP"
+
+# install (try sudo if needed)
+if [ -w "$INSTALL_DIR" ]; then
+  mv "${TMP}/${BINARY}" "${INSTALL_DIR}/${BINARY}"
 else
-    echo "Error: Could not find gen binary in the archive"
-    exit 1
+  sudo mv "${TMP}/${BINARY}" "${INSTALL_DIR}/${BINARY}"
 fi
 
-cd ..
-rm -rf gen_tmp
+chmod +x "${INSTALL_DIR}/${BINARY}"
+echo "✓ ${BINARY} installed to ${INSTALL_DIR}/${BINARY}"
+echo "  Run: ${BINARY} --version"
