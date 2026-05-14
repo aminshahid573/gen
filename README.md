@@ -1,10 +1,13 @@
+<div align="center">
+
 # gen
 
-[![Go Version](https://img.shields.io/github/go-mod/go-version/aminshahid573/gen)](https://go.dev/)
-[![Latest Release](https://img.shields.io/github/v/release/aminshahid573/gen)](https://github.com/aminshahid573/gen/releases)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Go Report Card](https://goreportcard.com/badge/github.com/aminshahid573/gen)](https://goreportcard.com/report/github.com/aminshahid573/gen)
-[![CI](https://github.com/aminshahid573/gen/actions/workflows/ci.yml/badge.svg)](https://github.com/aminshahid573/gen/actions/workflows/ci.yml)
+![Go Version](https://img.shields.io/github/go-mod/go-version/aminshahid573/gen?style=for-the-badge&labelColor=101418&color=9ccbfb)
+![Latest Release](https://img.shields.io/github/v/release/aminshahid573/gen?style=for-the-badge&labelColor=101418&color=b9c8da)
+![GitHub last commit](https://img.shields.io/github/last-commit/aminshahid573/gen?style=for-the-badge&labelColor=101418&color=d3bfe6)
+![GitHub repo size](https://img.shields.io/github/repo-size/aminshahid573/gen?style=for-the-badge&labelColor=101418&color=96f1f1)
+
+</div>
 
 A collection of small dev utilities packed into a single CLI — things you'd normally google or visit a website for. UUIDs, passwords, QR codes, OTPs, lorem ipsum, tokens and more, all from your terminal.
 
@@ -36,19 +39,19 @@ scoop install gen
 
 **apt** (Debian / Ubuntu)
 ```bash
-wget https://github.com/aminshahid573/gen/releases/latest/download/gen_linux_amd64.deb
-sudo dpkg -i gen_linux_amd64.deb
+wget https://github.com/aminshahid573/gen/releases/latest/download/gen_1.0.6_linux_amd64.deb
+sudo dpkg -i gen_1.0.6_linux_amd64.deb
 ```
 
 **rpm** (Fedora / RHEL)
 ```bash
-sudo rpm -i https://github.com/aminshahid573/gen/releases/latest/download/gen_linux_amd64.rpm
+rpm -i https://github.com/aminshahid573/gen/releases/download/v1.0.6/gen_1.0.6_linux_amd64.rpm
 ```
 
 **apk** (Alpine)
 ```bash
-wget https://github.com/aminshahid573/gen/releases/latest/download/gen_linux_amd64.apk
-sudo apk add --allow-untrusted gen_linux_amd64.apk
+wget https://github.com/aminshahid573/gen/releases/latest/download/gen_1.0.6_linux_amd64.apk
+apk add --allow-untrusted gen_1.0.6_linux_amd64.apk
 ```
 
 **curl / wget** (any OS)
