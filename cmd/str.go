@@ -50,18 +50,18 @@ Examples:
   gen str --charset "abcdef0123456789" --length 20`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		length, _    := cmd.Flags().GetInt("length")
-		enc, _       := cmd.Flags().GetString("encoding")
-		count, _     := cmd.Flags().GetInt("count")
-		prefix, _    := cmd.Flags().GetString("prefix")
-		suffix, _    := cmd.Flags().GetString("suffix")
-		pattern, _   := cmd.Flags().GetString("pattern")
-		customCS, _  := cmd.Flags().GetString("charset")
-		upper, _     := cmd.Flags().GetBool("uppercase")
-		lower, _     := cmd.Flags().GetBool("lowercase")
-		digits, _    := cmd.Flags().GetBool("digits")
-		symbols, _   := cmd.Flags().GetBool("symbols")
-		noAmbig, _   := cmd.Flags().GetBool("no-ambiguous")
+		length, _ := cmd.Flags().GetInt("length")
+		enc, _ := cmd.Flags().GetString("encoding")
+		count, _ := cmd.Flags().GetInt("count")
+		prefix, _ := cmd.Flags().GetString("prefix")
+		suffix, _ := cmd.Flags().GetString("suffix")
+		pattern, _ := cmd.Flags().GetString("pattern")
+		customCS, _ := cmd.Flags().GetString("charset")
+		upper, _ := cmd.Flags().GetBool("uppercase")
+		lower, _ := cmd.Flags().GetBool("lowercase")
+		digits, _ := cmd.Flags().GetBool("digits")
+		symbols, _ := cmd.Flags().GetBool("symbols")
+		noAmbig, _ := cmd.Flags().GetBool("no-ambiguous")
 
 		if count < 1 {
 			fatalf("--count must be at least 1")
@@ -111,18 +111,26 @@ func buildCharset(custom string, upper, lower, digits, symbols, noAmbiguous bool
 	}
 
 	const (
-		upperChars   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-		lowerChars   = "abcdefghijklmnopqrstuvwxyz"
-		digitChars   = "0123456789"
-		symbolChars  = "!@#$%^&*()-_=+[]{}|;:,.<>?"
-		ambiguous    = "0O1lIB8"
+		upperChars  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		lowerChars  = "abcdefghijklmnopqrstuvwxyz"
+		digitChars  = "0123456789"
+		symbolChars = "!@#$%^&*()-_=+[]{}|;:,.<>?"
+		ambiguous   = "0O1lIB8"
 	)
 
 	var sb strings.Builder
-	if upper   { sb.WriteString(upperChars) }
-	if lower   { sb.WriteString(lowerChars) }
-	if digits  { sb.WriteString(digitChars) }
-	if symbols { sb.WriteString(symbolChars) }
+	if upper {
+		sb.WriteString(upperChars)
+	}
+	if lower {
+		sb.WriteString(lowerChars)
+	}
+	if digits {
+		sb.WriteString(digitChars)
+	}
+	if symbols {
+		sb.WriteString(symbolChars)
+	}
 
 	cs := sb.String()
 

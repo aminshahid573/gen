@@ -41,11 +41,11 @@ Examples:
 
 	Run: func(cmd *cobra.Command, args []string) {
 		version, _ := cmd.Flags().GetInt("version")
-		name, _    := cmd.Flags().GetString("name")
-		ns, _      := cmd.Flags().GetString("namespace")
-		format, _  := cmd.Flags().GetString("format")
-		raw, _     := cmd.Flags().GetString("decode")
-		count, _   := cmd.Flags().GetInt("count")
+		name, _ := cmd.Flags().GetString("name")
+		ns, _ := cmd.Flags().GetString("namespace")
+		format, _ := cmd.Flags().GetString("format")
+		raw, _ := cmd.Flags().GetString("decode")
+		count, _ := cmd.Flags().GetInt("count")
 
 		// decode mode — skip generation
 		if raw != "" {
@@ -147,11 +147,11 @@ func decodeUUID(raw string) {
 	}
 
 	rows := [][]string{
-		{"String",    id.String()},
-		{"Compact",   strings.ReplaceAll(id.String(), "-", "")},
-		{"URN",       id.URN()},
-		{"Version",   strconv.Itoa(int(id.Version()))},
-		{"Variant",   id.Variant().String()},
+		{"String", id.String()},
+		{"Compact", strings.ReplaceAll(id.String(), "-", "")},
+		{"URN", id.URN()},
+		{"Version", strconv.Itoa(int(id.Version()))},
+		{"Variant", id.Variant().String()},
 		{"Timestamp", extractTimestamp(id)},
 	}
 

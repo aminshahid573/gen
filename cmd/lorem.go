@@ -39,19 +39,19 @@ Examples:
   gen lorem --paragraphs 3 --min-sentences 4 --max-sentences 8`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		words, _       := cmd.Flags().GetInt("words")
-		sentences, _   := cmd.Flags().GetInt("sentences")
-		paragraphs, _  := cmd.Flags().GetInt("paragraphs")
-		minSent, _     := cmd.Flags().GetInt("min-sentences")
-		maxSent, _     := cmd.Flags().GetInt("max-sentences")
+		words, _ := cmd.Flags().GetInt("words")
+		sentences, _ := cmd.Flags().GetInt("sentences")
+		paragraphs, _ := cmd.Flags().GetInt("paragraphs")
+		minSent, _ := cmd.Flags().GetInt("min-sentences")
+		maxSent, _ := cmd.Flags().GetInt("max-sentences")
 
 		// validate
 		if minSent > maxSent {
 			fatalf("--min-sentences cannot be greater than --max-sentences")
 		}
 
-		wordsFlagSet      := cmd.Flags().Changed("words")
-		sentencesFlagSet  := cmd.Flags().Changed("sentences")
+		wordsFlagSet := cmd.Flags().Changed("words")
+		sentencesFlagSet := cmd.Flags().Changed("sentences")
 		paragraphsFlagSet := cmd.Flags().Changed("paragraphs")
 
 		rng := rand.New(rand.NewSource(time.Now().UnixNano()))

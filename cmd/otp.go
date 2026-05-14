@@ -33,14 +33,14 @@ Examples:
   gen otp --secret JBSWY3DPEHPK3PXP --validate 123456`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		secret, _    := cmd.Flags().GetString("secret")
-		otpType, _   := cmd.Flags().GetString("type")
-		digits, _    := cmd.Flags().GetInt("digits")
-		period, _    := cmd.Flags().GetUint("period")
-		counter, _   := cmd.Flags().GetUint64("counter")
-		algo, _      := cmd.Flags().GetString("algorithm")
+		secret, _ := cmd.Flags().GetString("secret")
+		otpType, _ := cmd.Flags().GetString("type")
+		digits, _ := cmd.Flags().GetInt("digits")
+		period, _ := cmd.Flags().GetUint("period")
+		counter, _ := cmd.Flags().GetUint64("counter")
+		algo, _ := cmd.Flags().GetString("algorithm")
 		remaining, _ := cmd.Flags().GetBool("remaining")
-		validate, _  := cmd.Flags().GetString("validate")
+		validate, _ := cmd.Flags().GetString("validate")
 
 		if secret == "" {
 			fatalf("--secret is required (base32-encoded, e.g. JBSWY3DPEHPK3PXP)")

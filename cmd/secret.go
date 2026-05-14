@@ -36,17 +36,17 @@ Examples:
 
 	Run: func(cmd *cobra.Command, args []string) {
 		secretType, _ := cmd.Flags().GetString("type")
-		encoding, _   := cmd.Flags().GetString("encoding")
-		bytes, _      := cmd.Flags().GetInt("bytes")
-		prefix, _     := cmd.Flags().GetString("prefix")
-		count, _      := cmd.Flags().GetInt("count")
+		encoding, _ := cmd.Flags().GetString("encoding")
+		bytes, _ := cmd.Flags().GetInt("bytes")
+		prefix, _ := cmd.Flags().GetString("prefix")
+		count, _ := cmd.Flags().GetInt("count")
 
 		if count < 1 {
 			fatalf("--count must be at least 1")
 		}
 
 		// apply type defaults if the user hasn't overridden bytes/encoding
-		bytesFlagSet    := cmd.Flags().Changed("bytes")
+		bytesFlagSet := cmd.Flags().Changed("bytes")
 		encodingFlagSet := cmd.Flags().Changed("encoding")
 
 		byteCount, enc := resolveSecretDefaults(secretType, bytes, encoding, bytesFlagSet, encodingFlagSet)

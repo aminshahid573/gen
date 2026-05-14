@@ -29,13 +29,13 @@ Examples:
   gen pass --length 20 --symbols --no-ambiguous --count 3`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		length, _  := cmd.Flags().GetInt("length")
-		upper, _   := cmd.Flags().GetBool("uppercase")
-		lower, _   := cmd.Flags().GetBool("lowercase")
-		digits, _  := cmd.Flags().GetBool("digits")
+		length, _ := cmd.Flags().GetInt("length")
+		upper, _ := cmd.Flags().GetBool("uppercase")
+		lower, _ := cmd.Flags().GetBool("lowercase")
+		digits, _ := cmd.Flags().GetBool("digits")
 		symbols, _ := cmd.Flags().GetBool("symbols")
 		noAmbig, _ := cmd.Flags().GetBool("no-ambiguous")
-		count, _   := cmd.Flags().GetInt("count")
+		count, _ := cmd.Flags().GetInt("count")
 
 		if count < 1 {
 			fatalf("--count must be at least 1")
@@ -51,10 +51,18 @@ Examples:
 
 		// minimum length must fit one char per enabled class
 		minLen := 0
-		if upper   { minLen++ }
-		if lower   { minLen++ }
-		if digits  { minLen++ }
-		if symbols { minLen++ }
+		if upper {
+			minLen++
+		}
+		if lower {
+			minLen++
+		}
+		if digits {
+			minLen++
+		}
+		if symbols {
+			minLen++
+		}
 		if length < minLen {
 			fatalf("--length %d is too short to satisfy all enabled character classes (min %d)", length, minLen)
 		}

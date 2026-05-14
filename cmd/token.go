@@ -28,10 +28,10 @@ Examples:
   gen token --bytes 64 --prefix "sess_"`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		bytes, _  := cmd.Flags().GetInt("bytes")
+		bytes, _ := cmd.Flags().GetInt("bytes")
 		prefix, _ := cmd.Flags().GetString("prefix")
 		bearer, _ := cmd.Flags().GetBool("bearer")
-		count, _  := cmd.Flags().GetInt("count")
+		count, _ := cmd.Flags().GetInt("count")
 
 		if count < 1 {
 			fatalf("--count must be at least 1")

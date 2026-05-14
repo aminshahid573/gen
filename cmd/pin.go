@@ -25,9 +25,9 @@ Examples:
   gen pin --length 8 --group 4 --separator " "`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		length, _    := cmd.Flags().GetInt("length")
-		count, _     := cmd.Flags().GetInt("count")
-		group, _     := cmd.Flags().GetInt("group")
+		length, _ := cmd.Flags().GetInt("length")
+		count, _ := cmd.Flags().GetInt("count")
+		group, _ := cmd.Flags().GetInt("group")
 		separator, _ := cmd.Flags().GetString("separator")
 
 		if count < 1 {

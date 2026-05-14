@@ -43,13 +43,13 @@ Examples:
   gen time --format custom --layout "02 Jan 2006"`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		format, _  := cmd.Flags().GetString("format")
-		layout, _  := cmd.Flags().GetString("layout")
-		utc, _     := cmd.Flags().GetBool("utc")
-		random, _  := cmd.Flags().GetBool("random")
-		from, _    := cmd.Flags().GetString("from")
-		to, _      := cmd.Flags().GetString("to")
-		count, _   := cmd.Flags().GetInt("count")
+		format, _ := cmd.Flags().GetString("format")
+		layout, _ := cmd.Flags().GetString("layout")
+		utc, _ := cmd.Flags().GetBool("utc")
+		random, _ := cmd.Flags().GetBool("random")
+		from, _ := cmd.Flags().GetString("from")
+		to, _ := cmd.Flags().GetString("to")
+		count, _ := cmd.Flags().GetInt("count")
 
 		if count < 1 {
 			fatalf("--count must be at least 1")
@@ -129,16 +129,16 @@ func formatTime(t time.Time, format, customLayout string) (string, error) {
 
 func printAllFormats(t time.Time) {
 	rows := [][]string{
-		{"unix",        strconv.FormatInt(t.Unix(), 10)},
-		{"unixmilli",   strconv.FormatInt(t.UnixMilli(), 10)},
-		{"unixnano",    strconv.FormatInt(t.UnixNano(), 10)},
-		{"rfc3339",     t.Format(time.RFC3339)},
+		{"unix", strconv.FormatInt(t.Unix(), 10)},
+		{"unixmilli", strconv.FormatInt(t.UnixMilli(), 10)},
+		{"unixnano", strconv.FormatInt(t.UnixNano(), 10)},
+		{"rfc3339", t.Format(time.RFC3339)},
 		{"rfc3339nano", t.Format(time.RFC3339Nano)},
-		{"iso8601",     t.Format(time.RFC3339)},
-		{"http",        t.UTC().Format(time.RFC1123)},
-		{"date",        t.Format("2006-01-02")},
-		{"datetime",    t.Format("2006-01-02 15:04:05")},
-		{"kitchen",     t.Format(time.Kitchen)},
+		{"iso8601", t.Format(time.RFC3339)},
+		{"http", t.UTC().Format(time.RFC1123)},
+		{"date", t.Format("2006-01-02")},
+		{"datetime", t.Format("2006-01-02 15:04:05")},
+		{"kitchen", t.Format(time.Kitchen)},
 	}
 	fmt.Println(ui.RenderTable([]string{"Format", "Value"}, rows))
 }
@@ -165,7 +165,7 @@ func parseTimeRange(from, to string) (time.Time, time.Time) {
 	}
 
 	defaultFrom := time.Unix(0, 0)
-	defaultTo   := time.Now()
+	defaultTo := time.Now()
 
 	return parseOne(from, defaultFrom), parseOne(to, defaultTo)
 }
