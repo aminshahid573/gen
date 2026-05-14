@@ -56,7 +56,7 @@ func TestGenerateToken_Uniqueness(t *testing.T) {
 
 func TestGenerateToken_LongerBytes(t *testing.T) {
 	short, _ := generateToken(16, "", false)
-	long, _  := generateToken(64, "", false)
+	long, _ := generateToken(64, "", false)
 	if len(long) <= len(short) {
 		t.Errorf("64-byte token (%d) should be longer than 16-byte token (%d)", len(long), len(short))
 	}

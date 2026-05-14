@@ -48,9 +48,9 @@ func TestGenerateStr_Lengths(t *testing.T) {
 	charset := "abcdefghijklmnopqrstuvwxyz"
 
 	tests := []struct {
-		enc        string
-		length     int
-		exactLen   bool // exact output length matches input length
+		enc      string
+		length   int
+		exactLen bool // exact output length matches input length
 	}{
 		{"raw", 16, true},
 		{"raw", 32, true},
@@ -102,7 +102,7 @@ func TestGeneratePattern(t *testing.T) {
 	tests := []struct {
 		name    string
 		pattern string
-		length  int   // expected output length
+		length  int // expected output length
 	}{
 		{"uppercase only", "AAA", 3},
 		{"lowercase only", "aaa", 3},

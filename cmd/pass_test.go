@@ -26,34 +26,34 @@ func TestGeneratePassword_GuaranteedClasses(t *testing.T) {
 		checkFn func(string) bool
 	}{
 		{
-			name: "uppercase guaranteed",
+			name:  "uppercase guaranteed",
 			upper: true, lower: false, digits: false, symbols: false,
 			checkFn: func(s string) bool {
 				return strings.ContainsAny(s, "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 			},
 		},
 		{
-			name: "digit guaranteed",
+			name:  "digit guaranteed",
 			upper: false, lower: false, digits: true, symbols: false,
 			checkFn: func(s string) bool {
 				return strings.ContainsAny(s, "0123456789")
 			},
 		},
 		{
-			name: "symbol guaranteed",
+			name:  "symbol guaranteed",
 			upper: false, lower: false, digits: false, symbols: true,
 			checkFn: func(s string) bool {
 				return strings.ContainsAny(s, "!@#$%^&*()-_=+[]{}|;:,.<>?")
 			},
 		},
 		{
-			name: "all classes guaranteed",
+			name:  "all classes guaranteed",
 			upper: true, lower: true, digits: true, symbols: true,
 			checkFn: func(s string) bool {
-				hasUpper   := strings.ContainsAny(s, "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-				hasLower   := strings.ContainsAny(s, "abcdefghijklmnopqrstuvwxyz")
-				hasDigit   := strings.ContainsAny(s, "0123456789")
-				hasSymbol  := strings.ContainsAny(s, "!@#$%^&*()-_=+[]{}|;:,.<>?")
+				hasUpper := strings.ContainsAny(s, "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+				hasLower := strings.ContainsAny(s, "abcdefghijklmnopqrstuvwxyz")
+				hasDigit := strings.ContainsAny(s, "0123456789")
+				hasSymbol := strings.ContainsAny(s, "!@#$%^&*()-_=+[]{}|;:,.<>?")
 				return hasUpper && hasLower && hasDigit && hasSymbol
 			},
 		},

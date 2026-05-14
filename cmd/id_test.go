@@ -135,7 +135,7 @@ func TestExtractTimestamp(t *testing.T) {
 		version int
 		want    string // substring to check
 	}{
-		{"v1", 1, "T"},   // RFC3339 contains T
+		{"v1", 1, "T"}, // RFC3339 contains T
 		{"v6", 6, "T"},
 		{"v7", 7, "T"},
 		{"v3", 3, "n/a"},

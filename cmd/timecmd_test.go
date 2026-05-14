@@ -11,9 +11,9 @@ func TestFormatTime(t *testing.T) {
 	fixed := time.Date(2026, 5, 13, 10, 30, 0, 0, time.UTC)
 
 	tests := []struct {
-		format string
-		layout string
-		check  func(string) bool
+		format  string
+		layout  string
+		check   func(string) bool
 		wantErr bool
 	}{
 		{"unix", "", func(s string) bool {

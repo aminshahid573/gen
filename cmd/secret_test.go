@@ -56,9 +56,9 @@ func TestGenerateSecret_Uniqueness(t *testing.T) {
 
 func TestResolveSecretDefaults(t *testing.T) {
 	tests := []struct {
-		secretType      string
-		wantBytes       int
-		wantEncoding    string
+		secretType   string
+		wantBytes    int
+		wantEncoding string
 	}{
 		{"generic", 32, "hex"},
 		{"jwt", 64, "base64url"},
