@@ -5,9 +5,9 @@ package main
 
 import "gen/cmd"
 
-// Version is set by goreleaser during build
-var Version = "dev"
+// version is set by goreleaser during build
+var version = "dev"
 
 func main() {
-	cmd.Execute()
+	cmd.Execute(version)
 }
