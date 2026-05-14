@@ -8,6 +8,8 @@ before:
 
 builds:
   - binary: gen
+    ldflags:
+      - -s -w -X main.version={{.Version}}
     env:
       - CGO_ENABLED=0
     goos:
@@ -39,6 +41,7 @@ brews:
   - repository:
       owner: aminshahid573
       name: homebrew-tap
+    directory: "."
     commit_author:
       name: Shahid Amin
       email: createa557733@gmail.com
