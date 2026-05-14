@@ -6,7 +6,7 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-	"gen/internal/ui"
+	"github.com/aminshahid573/gen/internal/ui"
 	"os"
 	"strconv"
 	"strings"

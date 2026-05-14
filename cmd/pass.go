@@ -4,7 +4,7 @@ package cmd
 import (
 	"crypto/rand"
 	"fmt"
-	"gen/internal/ui"
+	"github.com/aminshahid573/gen/internal/ui"
 	"os"
 	"strconv"
 	"strings"

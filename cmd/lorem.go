@@ -3,7 +3,7 @@ package cmd
 
 import (
 	"fmt"
-	"gen/internal/ui"
+	"github.com/aminshahid573/gen/internal/ui"
 	"math/rand"
 	"strings"
 	"time"

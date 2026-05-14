@@ -1,4 +1,4 @@
-module gen
+module github.com/aminshahid573/gen
 
 go 1.26.1
 
@@ -9,6 +9,7 @@ require (
 	github.com/mr-tron/base58 v1.3.0
 	github.com/pquerna/otp v1.5.0
 	github.com/spf13/cobra v1.10.2
+	rsc.io/qr v0.2.0
 )
 
 require (
@@ -31,5 +32,4 @@ require (
 	golang.org/x/sync v0.18.0 // indirect
 	golang.org/x/sys v0.43.0 // indirect
 	golang.org/x/term v0.13.0 // indirect
-	rsc.io/qr v0.2.0 // indirect
 )

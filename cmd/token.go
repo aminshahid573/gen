@@ -5,7 +5,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
-	"gen/internal/ui"
+	"github.com/aminshahid573/gen/internal/ui"
 	"os"
 
 	"github.com/spf13/cobra"
